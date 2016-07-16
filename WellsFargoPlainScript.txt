@@ -1,0 +1,106 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+
+public class WellsFargo {
+	
+	public static void main(String[] args) throws InterruptedException
+	{
+	
+	
+	//Step.1  Launch WellsFargo home page
+	System.setProperty("webdriver.chrome.driver", "C:/chromedriver_win32/chromedriver.exe");
+	WebDriver driver = new ChromeDriver();
+	driver.get("https://www.wellsfargo.com/");
+	driver.manage().window().maximize();
+	System.out.println("You are on Wells Fargo home page");
+	
+	
+	
+	
+	
+	//Step.2 Verify you are on Personal Tab
+	WebElement Ins = driver.findElement(By.xpath(".//*[@id='insuranceTab']/a"));
+	String str = "Insurance";
+	if(Ins.getText().equals(str))
+	{
+		System.out.println("You are on Personal Tab");
+	}
+	
+	
+	
+	//Step.3  Click on "About Wells Fargo" and verify the page
+	WebElement Abt = driver.findElement(By.xpath(".//*[@id='headerTools']/nav/ul/li[2]/a"));
+	Abt.click();
+	WebElement Val = driver.findElement(By.xpath(".//*[@id='shell']/div[1]/h1"));
+	String str1 = "About Wells Fargo";
+	if(Val.getText().trim().equals(str1))
+	  {
+		System.out.println("About Wells Fargo is clicked and page is verified");	
+		}
+	
+	
+	
+	//Step.4  Confirm the heading
+	String str2= driver.getTitle();
+	if(str2.equals(str1))
+	{
+	System.out.println("The heading - "+str1+", has been confirmed");
+	}
+	
+	
+	
+	//Step.5  Navigate back to home page
+	driver.get("https://www.wellsfargo.com/");
+	System.out.println("You have been navigated back to home page");
+	
+	
+	//Step.6 Check you are on Personal tab
+	WebElement In = driver.findElement(By.xpath(".//*[@id='insuranceTab']/a"));
+	if(In.getText().equals(str))
+	{
+		System.out.println("You are on Personal Tab");
+	}
+	
+	
+	//Step.7 Click on Insurance tab- click homeowners Insurance link
+	
+	    //Initiate mouse action using Actions class
+		Actions builder = new Actions(driver);    
+
+		// move the mouse to the earlier identified menu option
+		builder.moveToElement(In).build().perform();
+		
+		//identify menu option from the resulting menu display and click
+		Thread.sleep(3000);
+		
+		WebElement menuOption = driver.findElement(By.xpath(".//*[@id='insurance']/div[1]/div[2]/ul/li[1]/a"));
+		Thread.sleep(3000);
+		menuOption.click();
+		Thread.sleep(5000);
+		System.out.println("Insurance tab is clicked and Home Owners Insurance link is clicked");
+		
+		
+	//Step.8 Enter zipcode
+		
+		WebElement txt = driver.findElement(By.xpath(".//*[@id='zipCode']"));
+		String textVal = "94587";
+		if(txt.isDisplayed())
+		{
+			txt.sendKeys(textVal);
+			System.out.println("Zipcode 94587 has been entered in the zipcode field");
+		}
+	
+	
+	
+	
+		
+	
+	
+	}
+}
